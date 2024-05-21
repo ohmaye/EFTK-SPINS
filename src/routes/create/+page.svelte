@@ -15,6 +15,8 @@
 			label: 'Intensive'
 		}
 	];
+	let cycle = '';
+	let program = '';
 </script>
 
 <Card.Root class="w-[350px]">
@@ -23,32 +25,25 @@
 		<Card.Description>Create a survey for a specific cycle (Starting Week)</Card.Description>
 	</Card.Header>
 	<Card.Content>
-		<form>
+		<form method="POST" action="?/create">
 			<div class="grid w-full items-center gap-4">
 				<div class="flex flex-col space-y-1.5">
 					<Label for="cycle">Cycle</Label>
-					<Input id="cycle" placeholder="Survey for Week" />
+					<Input id="cycle" name="cycle" placeholder="Survey for Week" bind:value={cycle} />
 				</div>
 				<div class="flex flex-col space-y-1.5">
 					<Label for="program">Program</Label>
-					<Select.Root>
-						<Select.Trigger id="program">
-							<Select.Value placeholder="Select" />
-						</Select.Trigger>
-						<Select.Content>
-							{#each programs as program}
-								<Select.Item value={program.value} label={program.label}
-									>{program.label}</Select.Item
-								>
-							{/each}
-						</Select.Content>
-					</Select.Root>
+					<select name="program" id="program" bind:value={program}>
+						{#each programs as program}
+							<option value={program.value} label={program.label}>{program.label}</option>
+						{/each}
+					</select>
 				</div>
 			</div>
+			<Card.Footer class="flex justify-between">
+				<Button variant="outline">Cancel</Button>
+				<Button type="submit">Create</Button>
+			</Card.Footer>
 		</form>
 	</Card.Content>
-	<Card.Footer class="flex justify-between">
-		<Button variant="outline">Cancel</Button>
-		<Button>Create</Button>
-	</Card.Footer>
 </Card.Root>
