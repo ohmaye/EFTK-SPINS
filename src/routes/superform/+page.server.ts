@@ -2,12 +2,12 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { message } from 'sveltekit-superforms';
 import { fail } from '@sveltejs/kit';
-import { schema } from '$lib/forms/schema';
+import { loginSchema } from '$lib/schemas';
 
-const someData = { name: '??', email: 'e@e.com' };
+const someData = { name: 'name', email: 'email' };
 
 export const load = async () => {
-	const form = await superValidate(someData, zod(schema));
+	const form = await superValidate(someData, zod(loginSchema));
 
 	// Always return { form } in load functions
 	return { form };
@@ -15,7 +15,7 @@ export const load = async () => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(schema));
+		const form = await superValidate(request, zod(loginSchema));
 		console.log(form);
 
 		if (!form.valid) {
